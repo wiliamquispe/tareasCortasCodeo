@@ -14,8 +14,9 @@
  *       3.3 Los encabezados deben ser modulos/subprogramas.                                                           )
  *
  *
- * autor: http://codigofuentecpp.blogspot.com/2013/10/codificacion-de-huffman.html
- * fecha: Adaptado por GASA
+ * @Autores: http://codigofuentecpp.blogspot.com/2013/10/codificacion-de-huffman.html
+ *		
+ * @fecha: Adaptado por GASA 25/08/2021
  */
 #include <iostream>
 #include <stdio.h>
@@ -154,3 +155,5 @@ void twosmall(ptr &p, ptr &q, int numnodes, ptr node[]) {
    }
 
 }
+
+void 
