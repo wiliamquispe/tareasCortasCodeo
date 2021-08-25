@@ -1,22 +1,18 @@
 /*
- * nomPrograma: codigoHuffman.cpp
- * descripcion: operaciones basica del codigo de Huffman
- *
- *       Datos de prueba ejemplo
- *    char arr[] = {'j', 'u', 'a', 'n', 'i', 't'};
- *    int freq[] = { 1,   2,   4,   1,   2,   3};
- *    1. Con los datos debe analiar y construir el arbol y luego
- *       codigo Huffman el cual debe chequear con la salida del prog.
- *    2. Analice el codigo y haga las mejoras.
- *    3. Module el programa, sobre todo el programa principal.
- *       3.1 Elimine variables globales
- *       3.2 En el programa principal solo debe haber llamdas a subprogramas
- *       3.3 Los encabezados deben ser modulos/subprogramas.                                                           )
- *
- *
- * @Autores: http://codigofuentecpp.blogspot.com/2013/10/codificacion-de-huffman.html
- *		
- * @fecha: Adaptado por GASA 25/08/2021
+ * nomPrograma: codigoHuffman.cpp !!!!!CAMBIAR!!!!!!!!!
+ * descripcion: Implementación en código de los algoritmos 
+ *				a.Mergesort
+ * 				b.Quicksort
+ *       		c.Camino Ponderado
+ *				d.Huffman
+ *			
+ * @autores: Grupo 3:
+ *        Curay Chacón, Piero Yahir		   19200206
+ *        Mejia Benito, Elphy Xavier	   19200032
+ *        Quispe Ñaupa, Wiliam Luis		   19200205
+ *        Valle Romero, Javier Eduardo     19200063
+ *        Yalle Muñoz, Edgar Saul Junior   19200052
+ * @fecha: 25/08/2021
  */
 #include <iostream>
 #include <stdio.h>
@@ -38,22 +34,33 @@ struct huff_node {
 
 typedef huff_node *ptr;
 
+/*--------------- PROTOTIPOS ---------------*/
+/*--------------- Metodos básicos ---------------*/
 void create(int k, ptr node[]);
 void print(int k, ptr node[]);
 void twosmall(ptr &p, ptr &q, int numnode, ptr node[]);
 
+/*--------------- Metodos de Algoritmo de Huffman ---------------*/
 int leerNroSimbolos();
 void crearSimbolos(int numsymbols, ptr node[]);
 void ordenarHuffman(int numsymbols, ptr node[]);
 void mostrartHuffman(int numsymbols, ptr node[]);
 
+
+/*--------------- Menú ---------------*/
+void menu();
+void opcionesMenu();
+
+
 int main() {
+	/*
 	ptr node[maxsize];
 	int numsymbols;
 	numsymbols = leerNroSimbolos();
 	crearSimbolos(numsymbols, node);
 	ordenarHuffman(numsymbols, node);
-	mostrartHuffman(numsymbols, node);
+	mostrartHuffman(numsymbols, node);*/
+	menu();
 	system("pause");
 	return(0);
 }
@@ -89,16 +96,17 @@ void ordenarHuffman(int numsymbols, ptr node[]) {
 }
 
 void mostrartHuffman(int numsymbols, ptr node[]) {
-	printf("\n\tCODIGO DE HUFFMAN\n\n");
+	printf("\n\t\t\tCODIGO DE HUFFMAN\n\n");
 	//cout <<"simbolo *-------* codigo: " << endl;
-	printf("===============================\n");
-	printf(" No  SIMBOLO\tCODIGO HUFFMAN\n");
-	printf("-------------------------------\n");
+	printf("\t\t===============================\n");
+	printf("\t\t No  SIMBOLO\tCODIGO HUFFMAN\n");
+	printf("\t\t-------------------------------\n");
 
 	for (int k = 0; k < numsymbols; k++) {
+		printf("\t\t");
 		print(k, node);
 	}
-	printf("------------------------------\n");
+	printf("\t\t------------------------------\n");
 }
 
 void create(int k, ptr node[]) {
@@ -156,4 +164,57 @@ void twosmall(ptr &p, ptr &q, int numnodes, ptr node[]) {
 
 }
 
-void 
+
+void opcionesMenu(){
+	printf("\t===================================================\n");
+   	printf("\t\t  MENU ALGORITMOS DE GRAFOS \n");
+   	printf("\t===================================================\n");
+   	printf("\t[0] Salir \n");
+   	printf("\t[1] Crear Grafo\n");
+   	printf("\t[2] Ordenamiento Mergesort\n");
+   	printf("\t[3] Ordenamiento Quicksort\n");
+   	printf("\t[4] Camino Ponderado\n");
+   	printf("\t[5] Algoritmo Huffman \n");
+   	printf("\t \n");
+}
+
+
+void menu(){
+	
+	int opc;
+	ptr node[maxsize];
+	int numsymbols;
+	 
+	do{
+		system("cls");
+		opcionesMenu();
+		do{
+			printf("\tIngrese una opcion -> ");
+			scanf("%d", &opc);
+			if(opc<0 || opc>5)
+				printf("\n\tOpcion no valido....\n");
+		}while(opc<0 || opc>5);
+		
+		switch(opc){
+			case 0: break;
+			case 1: printf("\n\t...\n");
+				
+				break;
+			case 2: printf("TBA Mergesort");
+				break;	
+			case 3: printf("TBA Quicksort");
+				break;
+			case 4: printf("TBA Camino ponderado");
+				break;
+			case 5:
+				numsymbols = leerNroSimbolos();
+				crearSimbolos(numsymbols, node);
+				ordenarHuffman(numsymbols, node);
+				mostrartHuffman(numsymbols, node);
+				break;	
+			default: break;
+		}
+		getch();	
+	}while(opc !=0);
+	printf("\tUd. acaba de salir...\n");
+}
