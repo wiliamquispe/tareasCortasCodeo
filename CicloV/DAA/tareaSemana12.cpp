@@ -46,7 +46,25 @@ struct NODO{
 typedef huff_node *ptr;
 
 	/*--------------- PROTOTIPOS ---------------*/
-/*--------------- Metodos delÁrbol ---------------*/
+/*						 Metodos de Ordenamiento					*/	
+/*------------------------------------------------------------------*/
+	/*--------------- MERGESORT---------------*/
+void entradaMS(int a[], int num);
+void merge_sort(int a[], int izquierda,int derecha);
+void merge(int v[], int izquierda,int medio,int derecha);
+void mostrarMS(int a[], int num);
+void pruebaMS();
+
+
+	/*--------------- QUICKSORT---------------*/
+void quickSort(int *vector, int inicio, int final);
+void pruebaQuickSort();
+void entradaVectorQS(int *vector);
+void imprimirQS(int *vector, int n);
+
+
+/*						 Metodos del Árbol 							*/	
+/*------------------------------------------------------------------*/
 void crearArbol(NODO **raiz);
 NODO* nuevoNodo(int dato);
 void nuevoArbol(NODO **raiz, NODO* ramaIzq, int x, NODO* ramaDer);
@@ -73,6 +91,7 @@ int leerNroSimbolos();
 void crearSimbolos(int numsymbols, ptr node[]);
 void ordenarHuffman(int numsymbols, ptr node[]);
 void mostrartHuffman(int numsymbols, ptr node[]);
+void pruebaHuffman();
 
 
 /*--------------- Menú ---------------*/
@@ -166,6 +185,7 @@ bool esHoja(NODO *raiz)    // Retorna true si el nodo es hoja
 void opcionesMenuCPonderado()
 {
    printf("\t===================================================\n");
+   printf("\t\t\t\tSUBMENU\n");
    printf("\t\t\tLONGITUD DE CAMINO PONDERADO\n");
    printf("\t===================================================\n");
    printf("\t[0] Salir\n");
@@ -352,11 +372,10 @@ void opcionesMenu(){
    	printf("\t\t  MENU ALGORITMOS DE GRAFOS \n");
    	printf("\t===================================================\n");
    	printf("\t[0] Salir \n");
-   	printf("\t[1] Crear Grafo\n");
-   	printf("\t[2] Ordenamiento Mergesort\n");
-   	printf("\t[3] Ordenamiento Quicksort\n");
-   	printf("\t[4] Camino Ponderado\n");
-   	printf("\t[5] Algoritmo Huffman \n");
+   	printf("\t[1] Ordenamiento Mergesort\n");
+   	printf("\t[2] Ordenamiento Quicksort\n");
+   	printf("\t[3] Camino Ponderado\n");
+   	printf("\t[4] Algoritmo Huffman \n");
    	printf("\t \n");
 }
 
@@ -364,8 +383,6 @@ void opcionesMenu(){
 void menu(){
 	
 	int opc;
-	ptr node[maxsize];
-	int numsymbols;
 	 
 	do{
 		system("cls");
@@ -379,24 +396,20 @@ void menu(){
 		
 		switch(opc){
 			case 0: break;
-			case 1: printf("\n\t...\n");
+			case 1: printf("TBA Mergesort");
 				
-				break;
-			case 2: printf("TBA Mergesort");
 				break;	
-			case 3: printf("TBA Quicksort");
+			case 2: //printf("TBA Quicksort");
+				pruebaQuickSort();
 				break;
-			case 4: 
+			case 3: 
 				system("cls");
-				printf("\t===================================================\n");
-  				 printf("\t\t\tSUBMENU\n");
+			//	printf("\t===================================================\n");
+  			//	 printf("\t\t\tSUBMENU\n");
   				menuCPonderado();
 				break;
-			case 5:
-				numsymbols = leerNroSimbolos();
-				crearSimbolos(numsymbols, node);
-				ordenarHuffman(numsymbols, node);
-				mostrartHuffman(numsymbols, node);
+			case 4:
+				pruebaHuffman();
 				break;	
 			default: break;
 		}
@@ -404,3 +417,207 @@ void menu(){
 	}while(opc !=0);
 	printf("\tUd. acaba de salir...\n");
 }
+
+void pruebaHuffman(){
+	ptr node[maxsize];
+	int numsymbols;
+	numsymbols = leerNroSimbolos();
+	crearSimbolos(numsymbols, node);
+	ordenarHuffman(numsymbols, node);
+	mostrartHuffman(numsymbols, node);
+}
+
+
+void quicksort(int *v, int inicio, int fin){
+	int i = inicio, f = fin, aux;
+	int x = v[(inicio+fin)/2];
+	
+	do{
+		while(v[i] < x && f <=fin)
+			i++;
+		while(x < v[f] && f >inicio)
+			f--;
+		if(i <= f){
+			aux = v[i];
+			v[f] = aux;
+			i++;
+			f--;
+		}
+	}while(i <= f);
+	
+	if(inicio < f)
+		quicksort(v, inicio, f);
+	if(i < fin)
+		quicksort(v, i, fin);
+	
+}
+
+/*-----------------METODOS MERGESORT-----------------------*/
+void pruebaMS(){
+	int num;
+	int a[50];
+	int dx = maxsize -100;
+	entradaMS(a,num);
+	
+}
+
+void merge_sort(int a[], int izquierda,int derecha){
+    int medio;
+    if(izquierda<derecha){
+    	/*  RECURSIVIDAD   */
+        medio=(izquierda+derecha)/2;
+        merge_sort(a,izquierda,medio);
+        merge_sort(a,medio+1,derecha);
+        merge(a,izquierda,medio,derecha);
+    }
+}
+
+void merge(int v[], int izquierda,int medio,int derecha){
+	int b[50]; //arreglo auxiliar
+    int x, y, z;
+    x=z=izquierda;
+    y=medio +1;
+    
+    //Bucle encargada de hacer la mezcla
+    while(x<=medio && y<=derecha){
+        if(v[x]<v[y]){
+            b[z++]=v[x++];
+        }
+        else{
+            b[z++]=v[y++];
+        }
+    }
+    //Bucle para mover los elementos no mezclados
+    while(x <= medio){
+        b[z++] = v[x++];
+    }
+    while(y <= derecha){
+        b[z++] = v[y++];
+    }
+    //Ahors se copia lo de 'aux' al vector original
+    for(z=izquierda; z<=derecha ; z++){
+        v[z]=b[z];
+    }
+    
+	/*
+	int h,i,j,k;
+    h=izquierda;
+    i=izquierda;
+    j=medio+1;
+    
+    while((h<=medio)&&(j<=derecha)){
+        if(a[h]<=a[j]){
+            b[i]=a[h];
+            h++;
+        }
+        else
+            {
+                b[i]=a[j];
+                j++;
+            }
+        i++;
+    }
+    if(h>medio){
+        for(k=j;k<=derecha;k++){
+            b[i]=a[k];
+            i++;
+        }
+    }
+    else
+        {
+            for(k=h;k<=medio;k++){
+                b[i]=a[k];
+                i++;
+            }
+        }
+    for(k=izquierda;k<=derecha;k++){
+        a[k]=b[k];
+        }*/
+}
+
+void entradaMS(int a[], int num){
+	cout<<"  *******************************"<<endl;
+	cout<<"   PROGRAMA MERGE SORT         "<<endl;
+    cout<<"  ******************************  "<<endl;
+	cout<<"\tINGRESE LA CANTIDAD DE ELEMENTOS"<<endl;
+    cin>>num;
+    cout<<endl;
+    cout<<"\tLOS ELEMENTOS SON:"<<endl;
+    for(int i=1;i<=num;i++){
+    	cout<<"\t";
+        cin>>a[i];
+	}
+	mostrarMS(a,num);
+	
+}
+void mostrarMS(int a[], int num){
+
+   	cout<<"\n\tEL NUEVO ORDEN DE ELEMENTOS ES:"<<endl;
+    for(int i=1;i<=num;i++){
+        cout<<a[i]<<"   ";
+        
+    }
+    cout<<endl;
+}
+
+
+
+	/*--------------- QUICKSORT---------------*/
+void quickSort(int *vector, int inicio, int final){
+	int i = inicio, f = final, tmp;
+  int x = vector[(inicio + final) / 2];
+  do {
+    while(vector[i] < x && f <= final) {
+      i++;
+    }
+    while(x < vector[f] && f > inicio) {
+      f--;
+    }
+    if(i <= f) {
+      tmp = vector[i];
+      vector[i] = vector[f];
+      vector[f] = tmp;
+      i++; f--;
+    }
+  } while(i <= f);
+
+  if(inicio < f) {
+    quickSort(vector,inicio,f);
+  }
+
+  if(i < final){
+    quickSort(vector,i,final);
+  }
+}
+
+void pruebaQuickSort(){
+	int vector[] ={-90,5,71,99,0,-105,12,33,26,3};
+	//entradaVectorQS(vector);
+	int nv = sizeof(vector)/sizeof(int);
+	cout<<"\tVector original:"<<endl;
+	imprimirQS(vector, nv);
+	quickSort(vector,0, nv-1);
+	cout<<"\tOrdenamiento QuickSort:"<<endl;
+	imprimirQS(vector, nv);
+}
+
+/*
+void entradaVectorQS(int *vector){
+	int num;
+	cout<<"\tIngrese tamanio del vector: ";
+	scanf("%d", &num);
+		cin>>vector[i];
+	}
+}*/
+
+void imprimirQS(int *vector, int n){
+	cout<<"\t";
+	for(int i=0; i< n; i++){
+		cout<<vector[i]<<" ";
+	}
+	cout<<endl;
+}
+
+
+
+
