@@ -34,14 +34,12 @@ struct huff_node {
    char childtype;
 };
 
-
 /*--------------- Registro de nodo de árbol ---------------*/
 struct NODO{
 	int val;
 	struct NODO *izq;
 	struct NODO *der;
 };
-
 
 typedef huff_node *ptr;
 
@@ -60,7 +58,6 @@ void pruebaQuickSort();
 void entradaVectorQS(int *vector);
 void imprimirVector(int *vector, int n);
 
-
 /*						 Metodos del Árbol 							*/	
 /*------------------------------------------------------------------*/
 void crearArbol(NODO **raiz);
@@ -76,14 +73,11 @@ bool esHoja(NODO *raiz);
 void opcionesMenuCPonderado();
 void menuCPonderado();
 
-
-
 	/*--------------- Metodos de Algoritmo de Huffman ---------------*/
 /*--------------- Metodos básicos ---------------*/
 void create(int k, ptr node[]);
 void print(int k, ptr node[]);
 void twosmall(ptr &p, ptr &q, int numnode, ptr node[]);
-
 
 int leerNroSimbolos();
 void crearSimbolos(int numsymbols, ptr node[]);
@@ -91,20 +85,11 @@ void ordenarHuffman(int numsymbols, ptr node[]);
 void mostrartHuffman(int numsymbols, ptr node[]);
 void pruebaHuffman();
 
-
 /*--------------- Menú ---------------*/
 void menu();
 void opcionesMenu();
 
-
 int main() {
-	/*
-	ptr node[maxsize];
-	int numsymbols;
-	numsymbols = leerNroSimbolos();
-	crearSimbolos(numsymbols, node);
-	ordenarHuffman(numsymbols, node);
-	mostrartHuffman(numsymbols, node);*/
 	menu();
 	system("pause");
 	return(0);
@@ -123,20 +108,17 @@ NODO* nuevoNodo(int dato)     // Crea y retorna un nodo con un dato de tipo int 
    neo->val = dato;
    neo->izq = NULL;
    neo->der = NULL;
-
    return neo;
 }
 
-void nuevoArbol(NODO **raiz, NODO* ramaIzq, int x, NODO* ramaDer)
-{
+void nuevoArbol(NODO **raiz, NODO* ramaIzq, int x, NODO* ramaDer){
     *raiz = nuevoNodo(x);
     (*raiz) -> izq = ramaIzq;
     (*raiz) -> der = ramaDer;
 }
 
-void comprobarArbolExtendido(NODO *raiz,bool &validado)
-{
-    if(raiz!=NULL){
+void comprobarArbolExtendido(NODO *raiz,bool &validado){ 
+   		if(raiz!=NULL){
         if(tieneAmbosHijos(raiz)){
             comprobarArbolExtendido(raiz->izq,validado);
             comprobarArbolExtendido(raiz->der,validado);
@@ -180,8 +162,7 @@ bool esHoja(NODO *raiz)    // Retorna true si el nodo es hoja
    }
 }
 
-void opcionesMenuCPonderado()
-{
+void opcionesMenuCPonderado(){
    printf("\t===================================================\n");
    printf("\t\t\t\tSUBMENU\n");
    printf("\t\t\tLONGITUD DE CAMINO PONDERADO\n");
@@ -190,20 +171,17 @@ void opcionesMenuCPonderado()
    printf("\t[1] Crear arbol \n");
    printf("\t[2] Insertar nodos del arbol\n");
    printf("\t[3] Comprobar arbol extendido\n");
-   printf("\t[4] Calcular camino ponderado\n");
-   
+   printf("\t[4] Calcular camino ponderado\n"); 
    printf("\t---------------------------------------------------\n");
 }
 
-void menuCPonderado()
-{
+void menuCPonderado(){
    NODO *a;
    bool validado = true;
    int cont = 0, caminoPon = 0;
    char opc;
    // Nodos para crear el arbol
    NODO *aizq, *ader;
-
    do {
       opcionesMenuCPonderado();
       printf("\tElija una opcion => ");
@@ -212,14 +190,11 @@ void menuCPonderado()
          case '0':
             printf("\n\tRETORNANDO AL MENU PRINCIPAL...");
             break;
-
          case '1':
             crearArbol(&a);
             printf("\n\tArbol creado con exito");
             break;
-
-         case '2':
-            
+         case '2':  
             ader = nuevoNodo(7);
             aizq = nuevoNodo(2);
             nuevoArbol(&a,aizq,1,ader);
@@ -261,10 +236,6 @@ void menuCPonderado()
    } while(opc!='0');
 }
 
-
-
-
-
 void crearSimbolos(int numsymbols, ptr node[]) {
 	for (int i = 0; i < numsymbols; i++) {
     	create(i, node);
@@ -301,7 +272,6 @@ void mostrartHuffman(int numsymbols, ptr node[]) {
 	printf("\t\t===============================\n");
 	printf("\t\t No  SIMBOLO\tCODIGO HUFFMAN\n");
 	printf("\t\t-------------------------------\n");
-
 	for (int k = 0; k < numsymbols; k++) {
 		printf("\t\t");
 		print(k, node);
@@ -344,7 +314,6 @@ void twosmall(ptr &p, ptr &q, int numnodes, ptr node[]) {
    int min2 = 9999;
    p = NULL;
    q = NULL;
-
    for (int i = 0; i < numnodes; i++) {
       if (node[i]->parent == NULL) {
          if (node[i]->freq < min1) {
@@ -361,9 +330,7 @@ void twosmall(ptr &p, ptr &q, int numnodes, ptr node[]) {
          }
       }
    }
-
 }
-
 
 void opcionesMenu(){
 	printf("\t===================================================\n");
@@ -377,11 +344,8 @@ void opcionesMenu(){
    	printf("\t \n");
 }
 
-
-void menu(){
-	
+void menu(){	
 	int opc;
-	 
 	do{
 		system("cls");
 		opcionesMenu();
@@ -390,8 +354,7 @@ void menu(){
 			scanf("%d", &opc);
 			if(opc<0 || opc>5)
 				printf("\n\tOpcion no valido....\n");
-		}while(opc<0 || opc>5);
-		
+		}while(opc<0 || opc>5);	
 		switch(opc){
 			case 0: break;
 			case 1: //printf("TBA Mergesort");
@@ -425,11 +388,9 @@ void pruebaHuffman(){
 	mostrartHuffman(numsymbols, node);
 }
 
-
 void quicksort(int *v, int inicio, int fin){
 	int i = inicio, f = fin, aux;
-	int x = v[(inicio+fin)/2];
-	
+	int x = v[(inicio+fin)/2];	
 	do{
 		while(v[i] < x && f <=fin)
 			i++;
@@ -447,7 +408,6 @@ void quicksort(int *v, int inicio, int fin){
 		quicksort(v, inicio, f);
 	if(i < fin)
 		quicksort(v, i, fin);
-	
 }
 
 /*-----------------METODOS MERGESORT-----------------------*/
@@ -498,9 +458,7 @@ void mezclaEntero(int *vector, int izq, int med, int der){
     }
 }
 
-
-
-	/*--------------- QUICKSORT---------------*/
+	/*--------------- METODO QUICKSORT---------------*/
 void quickSort(int *vector, int inicio, int final){
 	int i = inicio, f = final, tmp;
   int x = vector[(inicio + final) / 2];
@@ -518,11 +476,9 @@ void quickSort(int *vector, int inicio, int final){
       i++; f--;
     }
   } while(i <= f);
-
   if(inicio < f) {
     quickSort(vector,inicio,f);
   }
-
   if(i < final){
     quickSort(vector,i,final);
   }
@@ -538,15 +494,6 @@ void pruebaQuickSort(){
 	cout<<"\tOrdenamiento QuickSort:"<<endl;
 	imprimirVector(vector, nv);
 }
-
-/*
-void entradaVectorQS(int *vector){
-	int num;
-	cout<<"\tIngrese tamanio del vector: ";
-	scanf("%d", &num);
-		cin>>vector[i];
-	}
-}*/
 
 void imprimirVector(int *vector, int n){
 	cout<<"\t";
