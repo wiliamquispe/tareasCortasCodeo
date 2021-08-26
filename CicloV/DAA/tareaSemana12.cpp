@@ -1,5 +1,5 @@
 /*
- * nomPrograma: codigoHuffman.cpp !!!!!CAMBIAR!!!!!!!!!
+ * nomPrograma: AlgoritmosS13-G3.cpp 
  * descripcion: Implementación en código de los algoritmos 
  *				a.Mergesort
  * 				b.Quicksort
@@ -49,18 +49,16 @@ typedef huff_node *ptr;
 /*						 Metodos de Ordenamiento					*/	
 /*------------------------------------------------------------------*/
 	/*--------------- MERGESORT---------------*/
-void entradaMS(int a[], int num);
-void merge_sort(int a[], int izquierda,int derecha);
-void merge(int v[], int izquierda,int medio,int derecha);
-void mostrarMS(int a[], int num);
 void pruebaMS();
-
+void MergeSort(int *vector, int ini, int fin);
+void mezclaEntero(int *vector, int izq, int med, int der);
+void imprinirMG(int *vector, int n);
 
 	/*--------------- QUICKSORT---------------*/
 void quickSort(int *vector, int inicio, int final);
 void pruebaQuickSort();
 void entradaVectorQS(int *vector);
-void imprimirQS(int *vector, int n);
+void imprimirVector(int *vector, int n);
 
 
 /*						 Metodos del Árbol 							*/	
@@ -396,8 +394,8 @@ void menu(){
 		
 		switch(opc){
 			case 0: break;
-			case 1: printf("TBA Mergesort");
-				
+			case 1: //printf("TBA Mergesort");
+				pruebaMS();
 				break;	
 			case 2: //printf("TBA Quicksort");
 				pruebaQuickSort();
@@ -454,110 +452,50 @@ void quicksort(int *v, int inicio, int fin){
 
 /*-----------------METODOS MERGESORT-----------------------*/
 void pruebaMS(){
-	int num;
-	int a[50];
-	int dx = maxsize -100;
-	entradaMS(a,num);
-	
+	int vector[] ={-90,5,71,99,0,-105,12,33,26,3};
+	int nv = sizeof(vector)/sizeof(int);
+	cout<<"\tVector original:"<<endl;
+	imprimirVector(vector, nv);
+	MergeSort(vector,0, nv-1);
+	cout<<"\tOrdenamiento MergeSort:"<<endl;
+	imprimirVector(vector, nv);
 }
 
-void merge_sort(int a[], int izquierda,int derecha){
-    int medio;
-    if(izquierda<derecha){
-    	/*  RECURSIVIDAD   */
-        medio=(izquierda+derecha)/2;
-        merge_sort(a,izquierda,medio);
-        merge_sort(a,medio+1,derecha);
-        merge(a,izquierda,medio,derecha);
+void MergeSort(int *vector, int ini, int fin){
+	int med;
+    if(ini<fin){
+        med=(ini+fin)/2;
+        MergeSort(vector,ini,med);
+        MergeSort(vector,med+1,fin);
+        mezclaEntero(vector,ini,med,fin);
     }
 }
 
-void merge(int v[], int izquierda,int medio,int derecha){
-	int b[50]; //arreglo auxiliar
-    int x, y, z;
-    x=z=izquierda;
-    y=medio +1;
-    
-    //Bucle encargada de hacer la mezcla
-    while(x<=medio && y<=derecha){
-        if(v[x]<v[y]){
-            b[z++]=v[x++];
+void mezclaEntero(int *vector, int izq, int med, int der){
+	static int aux[maxsize];
+    int x,y,z;
+    x=z=izq;
+    y=med+1;
+    //Bucle que se encargará de hacer la mezcla
+    while(x<=med && y<=der){
+        if(vector[x]<vector[y]){
+            aux[z++]=vector[x++];
         }
         else{
-            b[z++]=v[y++];
+            aux[z++]=vector[y++];
         }
     }
     //Bucle para mover los elementos no mezclados
-    while(x <= medio){
-        b[z++] = v[x++];
+    while(x <= med){
+        aux[z++] = vector[x++];
     }
-    while(y <= derecha){
-        b[z++] = v[y++];
+    while(y <= der){
+        aux[z++] = vector[y++];
     }
     //Ahors se copia lo de 'aux' al vector original
-    for(z=izquierda; z<=derecha ; z++){
-        v[z]=b[z];
+    for(z=izq; z<=der ; z++){
+        vector[z]=aux[z];
     }
-    
-	/*
-	int h,i,j,k;
-    h=izquierda;
-    i=izquierda;
-    j=medio+1;
-    
-    while((h<=medio)&&(j<=derecha)){
-        if(a[h]<=a[j]){
-            b[i]=a[h];
-            h++;
-        }
-        else
-            {
-                b[i]=a[j];
-                j++;
-            }
-        i++;
-    }
-    if(h>medio){
-        for(k=j;k<=derecha;k++){
-            b[i]=a[k];
-            i++;
-        }
-    }
-    else
-        {
-            for(k=h;k<=medio;k++){
-                b[i]=a[k];
-                i++;
-            }
-        }
-    for(k=izquierda;k<=derecha;k++){
-        a[k]=b[k];
-        }*/
-}
-
-void entradaMS(int a[], int num){
-	cout<<"  *******************************"<<endl;
-	cout<<"   PROGRAMA MERGE SORT         "<<endl;
-    cout<<"  ******************************  "<<endl;
-	cout<<"\tINGRESE LA CANTIDAD DE ELEMENTOS"<<endl;
-    cin>>num;
-    cout<<endl;
-    cout<<"\tLOS ELEMENTOS SON:"<<endl;
-    for(int i=1;i<=num;i++){
-    	cout<<"\t";
-        cin>>a[i];
-	}
-	mostrarMS(a,num);
-	
-}
-void mostrarMS(int a[], int num){
-
-   	cout<<"\n\tEL NUEVO ORDEN DE ELEMENTOS ES:"<<endl;
-    for(int i=1;i<=num;i++){
-        cout<<a[i]<<"   ";
-        
-    }
-    cout<<endl;
 }
 
 
@@ -591,14 +529,14 @@ void quickSort(int *vector, int inicio, int final){
 }
 
 void pruebaQuickSort(){
-	int vector[] ={-90,5,71,99,0,-105,12,33,26,3};
+	int vector[] ={-55,45,81,9,10,-85,72,33,26,16};
 	//entradaVectorQS(vector);
 	int nv = sizeof(vector)/sizeof(int);
 	cout<<"\tVector original:"<<endl;
-	imprimirQS(vector, nv);
+	imprimirVector(vector, nv);
 	quickSort(vector,0, nv-1);
 	cout<<"\tOrdenamiento QuickSort:"<<endl;
-	imprimirQS(vector, nv);
+	imprimirVector(vector, nv);
 }
 
 /*
@@ -610,14 +548,10 @@ void entradaVectorQS(int *vector){
 	}
 }*/
 
-void imprimirQS(int *vector, int n){
+void imprimirVector(int *vector, int n){
 	cout<<"\t";
 	for(int i=0; i< n; i++){
 		cout<<vector[i]<<" ";
 	}
 	cout<<endl;
 }
-
-
-
-
